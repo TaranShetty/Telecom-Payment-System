@@ -33,7 +33,7 @@ This project focuses on automation, data consistency, and usability, making it s
 
 ## Project Structure
 
-telecom-ai-payment-system/
+```telecom-ai-payment-system/
 │
 ├── test_app.py                 # Main Flask application
 ├── chatbot_logic.py            # Backend chatbot logic
@@ -72,5 +72,5 @@ telecom-ai-payment-system/
 │
 ├── __pycache__/                # Python cache files
 │
-└── README.md
+└── README.md```
 

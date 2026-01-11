@@ -1,7 +1,7 @@
-# Telecom AI Payment System
+# Telecom Payment System
 
 ## Overview
-The **Telecom AI Payment System** is a web-based enterprise application developed to streamline telecom payment management and tracking. The system provides a centralized platform for submitting, monitoring, and analyzing telecom payment requests along with vendor and service-wise records. It also includes an AI-assisted chatbot to support users with navigation and operational queries.
+The **Telecom Payment System** is a web-based enterprise application developed to streamline telecom payment management and tracking. The system provides a centralized platform for submitting, monitoring, and analyzing telecom payment requests along with vendor and service-wise records. It also includes an AI-assisted chatbot to support users with navigation and operational queries.
 
 This project focuses on automation, data consistency, and usability, making it suitable for internal organizational use and academic evaluation.
 
@@ -73,5 +73,6 @@ This project focuses on automation, data consistency, and usability, making it s
 ├── __pycache__/                # Python cache files
 │
 └── README.md
+
 
 

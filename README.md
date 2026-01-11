@@ -72,5 +72,5 @@ This project focuses on automation, data consistency, and usability, making it s
 │
 ├── __pycache__/                # Python cache files
 │
-└── README.md```
+└── README.md
 

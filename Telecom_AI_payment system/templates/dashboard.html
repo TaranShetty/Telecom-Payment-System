@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if is_home %}
+
+<div class="container-fluid mt-5">
+    <div class="row">
+        <div class="col-12 d-flex justify-content-center">
+            <div class="card services-card p-4 text-center">
+                <h4 class="fw-bold neon-text mb-4">Services</h4>
+
+                <div class="services-grid-centered">
+                    <a href="{{ url_for('mpls') }}" class="btn btn-outline-primary">MPLS</a>
+                    <a href="{{ url_for('new_commission') }}" class="btn btn-outline-success">New Commission</a>
+                    <a href="{{ url_for('analysis') }}" class="btn btn-outline-info">Analysis</a>
+
+                    <a href="{{ url_for('bandwidth') }}" class="btn btn-outline-warning">Bandwidth</a>
+                    <a href="{{ url_for('info') }}" class="btn btn-outline-secondary">Location Details</a>
+                    <a href="{{ url_for('request_payment') }}" class="btn btn-warning fw-bold">Pay</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% else %}
+
+<div class="d-flex justify-content-center align-items-center" style="min-height: 70vh;">
+    <div class="text-center text-muted">
+        <h4>Select a service from the Home page</h4>
+    </div>
+</div>
+
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,179 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h3 class="neon-text fw-bold mb-4">Analysis</h3>
+
+<div class="row g-4">
+
+    <!-- PIE CHART -->
+    <div class="col-md-6">
+        <div class="card chart-card">
+            <canvas id="pendingChart"></canvas>
+            <p class = "text-light opacity-75 small mt-3 text-center">
+               Shows how the total pending payment amount is split across PGCIL, JIO, and BSNL.
+
+        </div>
+    </div>
+
+    <!-- BAR CHART -->
+    <div class="col-md-6">
+        <div class="card chart-card">
+            <canvas id="unitsChart"></canvas>
+        <p class="text-light opacity-75 small mt-3 text-center">
+        Represents the total number of pending billing periods for each vendor.
+        </p>
+        </div>
+    </div>
+
+</div>
+
+<!-- LINE CHART -->
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card line-chart-card">
+            <canvas id="bandwidthChart"></canvas>
+        </div>
+    </div>
+</div>
+
+<script>
+/* GLOBAL DARK THEME FIX */
+Chart.defaults.color = "#e6f1ff";
+Chart.defaults.borderColor = "rgba(255,255,255,0.08)";
+Chart.defaults.font.family = "Segoe UI";
+
+const pendingAmounts = {{ amounts | tojson }};
+const pendingQuarters = {{ quarters | tojson }};
+
+/* PIE */
+new Chart(document.getElementById("pendingChart"), {
+    type: "pie",
+    data: {
+        labels: ["PGCIL", "JIO", "BSNL"],
+        datasets: [{
+            data: pendingAmounts,
+            backgroundColor: ["#0d6efd", "#17a2b8", "#28a745"],
+            borderWidth: 2
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            title: {
+                display: true,
+                text: "Pending Amount Distribution (%)",
+                color: "#e6f1ff",
+                font: { size: 16, weight: "bold" }
+            },
+            legend: {
+                labels: { color: "#e6f1ff" }
+            }
+        }
+    }
+});
+
+/* BAR */
+new Chart(document.getElementById("unitsChart"), {
+    type: "bar",
+    data: {
+        labels: ["PGCIL", "JIO", "BSNL"],
+        datasets: [{
+            label: "Pending Period",
+            data: pendingQuarters,
+            backgroundColor: "#00e5ff",
+            borderRadius: 8,
+            barThickness: 40
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            title: {
+                display: true,
+                text: "Vendor-wise Pending Period",
+                color: "#e6f1ff",
+                font: { size: 16, weight: "bold" }
+            },
+            legend: {
+                labels: { color: "#e6f1ff" }
+            }
+        },
+        scales: {
+            x: {
+                ticks: { color: "#e6f1ff" },
+                grid: { color: "rgba(255,255,255,0.08)" }
+            },
+            y: {
+                ticks: { color: "#e6f1ff" },
+                grid: { color: "rgba(255,255,255,0.08)" },
+                beginAtZero: true
+            }
+        }
+    }
+});
+
+/* LINE */
+new Chart(document.getElementById("bandwidthChart"), {
+    type: "line",
+    data: {
+        labels: [4, 6, 8, 10, 12, 40, 50],
+        datasets: [
+            {
+                label: "PGCIL",
+                data: [25000, null, null, 50000, null, null, 90000],
+                borderColor: "#0d6efd",
+                tension: 0.4,
+                spanGaps: true,
+                pointRadius: 4
+            },
+            {
+                label: "JIO",
+                data: [30000, 40000, null, 60000, null, 90000, null],
+                borderColor: "#17a2b8",
+                tension: 0.4,
+                spanGaps: true,
+                pointRadius: 4
+            },
+            {
+                label: "BSNL",
+                data: [40000, 47500, 50000, 103500, 123500, null, null],
+                borderColor: "#28a745",
+                tension: 0,
+                spanGaps: false,
+                pointRadius: 4,
+                borderWidth: 3
+            }
+        ]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            title: {
+                display: true,
+                text: "Bandwidth vs Cost Comparison",
+                color: "#00e5ff",
+                font: { size: 17, weight: "bold" }
+            },
+            legend: {
+                labels: { color: "#e6f1ff" }
+            }
+        },
+        scales: {
+            x: {
+                ticks: { color: "#e6f1ff" },
+                grid: { color: "rgba(255,255,255,0.08)" }
+            },
+            y: {
+                ticks: { color: "#e6f1ff" },
+                grid: { color: "rgba(255,255,255,0.08)" }
+            }
+        }
+    }
+});
+</script>
+
+{% endblock %}

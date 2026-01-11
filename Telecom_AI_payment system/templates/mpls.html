@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h3 class="fw-bold neon-text mb-4">
+    MPLS Links
+</h3>
+
+<div class="d-flex gap-3 mb-4">
+    <a href="{{ url_for('mpls_vendor', vendor='pgcil') }}"
+       class="btn btn-outline-primary btn-lg px-4">
+        PGCIL
+    </a>
+
+    <a href="{{ url_for('mpls_vendor', vendor='jio') }}"
+       class="btn btn-outline-info btn-lg px-4">
+        JIO
+    </a>
+
+    <a href="{{ url_for('mpls_vendor', vendor='bsnl') }}"
+       class="btn btn-outline-success btn-lg px-4">
+        BSNL
+    </a>
+</div>
+
+<div class="card p-5 text-center">
+
+    <h5 class="mb-3 neon-text">
+        📡 MPLS Network Overview
+    </h5>
+
+    <p class="text-light opacity-75 fs-6">
+        MPLS (Multiprotocol Label Switching) links are used for
+        secure, low-latency, and high-priority data transmission
+        across telecom networks.
+    </p>
+
+    <p class="text-light opacity-75 fs-6 mb-0">
+        Select a provider above to view location-wise pending amounts,
+        billing cycles, and outstanding payment periods.
+    </p>
+
+</div>
+
+{% endblock %}

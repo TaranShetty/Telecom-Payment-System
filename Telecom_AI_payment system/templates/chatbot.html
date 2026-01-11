@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h3 class="fw-bold mb-3 neon-text text-center">
+    🤖 AI Assistant
+</h3>
+
+<div class="card shadow p-3"
+     style="height: 70vh; display: flex; flex-direction: column;">
+
+ 
+    <div id="chatbot-messages"
+         class="flex-grow-1 mb-3 p-3 border rounded overflow-auto"
+         style="background: rgba(0,0,0,0.25); color: #e6f1ff;">
+    </div>
+
+
+    <div class="d-flex gap-2">
+        <input type="text"
+               id="chatbot-text"
+               class="form-control"
+               placeholder="Ask about pending amount, vendors, billing…"
+               onkeydown="if(event.key==='Enter'){sendMessage();}">
+        <button class="btn btn-info fw-bold" onclick="sendMessage()">
+            Send
+        </button>
+    </div>
+</div>
+
+<script>
+const messages = document.getElementById("chatbot-messages");
+
+
+window.onload = () => {
+    messages.innerHTML += `
+        <div class="mb-3">
+            <b>AI:</b> 👋 Hello! I’m your <b>Telecom AI Assistant</b>.<br><br>
+
+            I can help you with:
+            <ul>
+                <li>📊 Pending amounts (PGCIL, JIO, BSNL, Airtel)</li>
+                <li>📅 Billing periods & quarters</li>
+                <li>🧾 Highest dues</li>
+            </ul>
+
+            Just type your question below 👇
+        </div>
+    `;
+};
+
+
+function sendMessage() {
+    const input = document.getElementById("chatbot-text");
+    const msg = input.value.trim();
+    if (!msg) return;
+
+    messages.innerHTML += `
+        <div class="mb-2">
+            <b>You:</b> ${msg}
+        </div>
+    `;
+    input.value = "";
+
+    fetch("{{ url_for('chatbot_message') }}", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ message: msg })
+    })
+    .then(response => response.json())
+    .then(data => {
+        messages.innerHTML += `
+            <div class="mb-3">
+                <b>AI:</b> ${data.reply}
+            </div>
+        `;
+        messages.scrollTop = messages.scrollHeight;
+    })
+    .catch(() => {
+        messages.innerHTML += `
+            <div class="mb-3 text-danger">
+                <b>AI:</b> Sorry, something went wrong.
+            </div>
+        `;
+    });
+}
+</script>
+
+{% endblock %}

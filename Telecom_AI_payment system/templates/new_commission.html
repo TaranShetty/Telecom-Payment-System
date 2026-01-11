@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h3 class="fw-bold neon-text mb-2">New Commission</h3>
+
+<p class="text-light opacity-75 fs-6">
+    New Commission represents recently provisioned telecom links
+    that are pending activation, billing, or confirmation.
+</p>
+
+<p class="text-light opacity-75 fs-6 mb-4">
+    Select a provider above to view location-wise pending amounts,
+    commission duration, and outstanding activation timelines.
+</p>
+
+
+<div class="d-flex gap-3 mb-4">
+
+    <a href="{{ url_for('airtel_commission') }}"
+       class="btn btn-outline-danger btn-lg airtel-theme">
+        <i class="bi bi-wifi me-2"></i> Airtel
+    </a>
+
+    <button class="btn btn-outline-info btn-lg"
+            onclick="showHughesStatus()">
+        <i class="bi bi-router me-2"></i> Hughes
+    </button>
+
+</div>
+
+
+<div class="card p-4"
+     style="min-height: 320px;">
+
+    <div id="defaultStatus" class="text-center">
+
+        <h5 class="fw-bold neon-text mb-2">
+            <i class="bi bi-info-circle-fill me-2"></i>
+            Commission Status
+        </h5>
+
+        <p class="text-light opacity-75 fs-6 mb-0">
+            Select a provider above to view commission details.
+        </p>
+
+    </div>
+
+    <div id="hughesStatus" class="text-center d-none">
+
+        <h5 class="fw-bold neon-text mb-2">
+            <i class="bi bi-router-fill me-2"></i>
+            Hughes Status
+        </h5>
+
+        <p class="text-light opacity-75 fs-6 mb-0">
+            To be commissioned
+        </p>
+
+    </div>
+
+</div>
+
+<script>
+function showHughesStatus() {
+    document.getElementById("defaultStatus").classList.add("d-none");
+    document.getElementById("hughesStatus").classList.remove("d-none");
+}
+</script>
+
+{% endblock %}

@@ -1,0 +1,115 @@
+{% extends "base_focus.html" %}
+{% block content %}
+
+<h3 class="fw-bold mb-4 neon-text">Request Payment</h3>
+
+<div class="card shadow p-4">
+
+<form method="POST">
+
+    <div class="mb-3">
+        <label class="form-label fw-bold">Location Name</label>
+        <input list="locationList"
+               name="location"
+               id="location"
+               class="form-control"
+               placeholder="Search location..."
+               required>
+
+        <datalist id="locationList">
+            {% for loc in locations %}
+                <option value="{{ loc }}"></option>
+            {% endfor %}
+        </datalist>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label fw-bold">MPLS Provider</label>
+        <select name="provider" id="provider" class="form-select" required>
+            <option value="" disabled selected>Select Provider</option>
+            {% for p in providers %}
+                <option value="{{ p }}">{{ p }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label fw-bold">Start Date</label>
+        <input type="date"
+               name="start_date"
+               id="start_date"
+               class="form-control"
+               min="{{ min_date }}"
+               required>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label fw-bold">End Date</label>
+        <input type="date"
+               name="end_date"
+               id="end_date"
+               class="form-control"
+               readonly
+               required>
+    </div>
+
+    <div class="text-center mt-4">
+        <button type="submit" class="btn btn-neon btn-lg fw-bold px-5">
+            Pay Now
+        </button>
+    </div>
+
+</form>
+</div>
+
+<script>
+const today = new Date().toISOString().split("T")[0];
+document.getElementById("start_date").setAttribute("max", today);
+
+function calculateEndDate() {
+    const provider = document.getElementById("provider").value;
+    const startVal = document.getElementById("start_date").value;
+    const endInput = document.getElementById("end_date");
+
+    endInput.value = "";
+
+    if (!provider || !startVal) return;
+
+    const y = startVal.substring(0, 4);
+
+    if (provider === "PGCIL" || provider === "JIO") {
+        if (startVal === `${y}-01-01`) endInput.value = `${y}-03-31`;
+        else if (startVal === `${y}-04-01`) endInput.value = `${y}-06-30`;
+        else if (startVal === `${y}-07-01`) endInput.value = `${y}-09-30`;
+        else if (startVal === `${y}-10-01`) endInput.value = `${y}-12-31`;
+    }
+
+    if (provider === "BSNL") {
+        if (startVal === `${y}-01-01`) endInput.value = `${y}-06-30`;
+        else if (startVal === `${y}-07-01`) endInput.value = `${y}-12-31`;
+    }
+}
+
+document.getElementById("provider").addEventListener("change", calculateEndDate);
+document.getElementById("start_date").addEventListener("change", calculateEndDate);
+
+document.getElementById("location").addEventListener("change", () => {
+    const location = document.getElementById("location").value;
+
+    fetch(`/api/available-providers?location=${encodeURIComponent(location)}`)
+        .then(res => res.json())
+        .then(available => {
+            const providerSelect = document.getElementById("provider");
+
+            [...providerSelect.options].forEach(opt => {
+                if (!opt.value) return;
+                opt.disabled = !available.includes(opt.value);
+            });
+
+            providerSelect.value = "";
+            document.getElementById("end_date").value = "";
+        });
+});
+</script>
+
+{% endblock %}

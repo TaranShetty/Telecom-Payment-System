@@ -1,0 +1,30 @@
+{% extends "base_focus.html" %}
+
+{% block content %}
+<h3 class="fw-bold mb-4 neon-text">
+    {{ vendor }} Bandwidth Details
+</h3>
+
+<div class="card shadow p-4">
+    <div class="table-responsive">
+        <table class="table table-dark table-hover align-middle">
+            <thead>
+                <tr>
+                    {% for col in columns %}
+                        <th>{{ col }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in table_data %}
+                    <tr>
+                        {% for col in columns %}
+                            <td>{{ row[col] }}</td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

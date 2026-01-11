@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h3 class="fw-bold neon-text mb-4">
+    Bandwidth
+</h3>
+
+<div class="d-flex gap-3 mb-4">
+    <a href="/bandwidth/pgcil"
+       class="btn btn-outline-primary btn-lg px-4">
+        PGCIL
+    </a>
+
+    <a href="/bandwidth/jio"
+       class="btn btn-outline-info btn-lg px-4">
+        JIO
+    </a>
+
+    <a href="/bandwidth/bsnl"
+       class="btn btn-outline-success btn-lg px-4">
+        BSNL
+    </a>
+</div>
+
+<div class="card p-5 text-center">
+
+    <h5 class="mb-3 neon-text">
+        📊 Bandwidth Utilization Overview
+    </h5>
+
+    <p class="text-light opacity-75 fs-6">
+        This section provides a vendor-wise view of bandwidth allocation
+        and associated costs across telecom links.
+    </p>
+
+    <p class="text-light opacity-75 fs-6 mb-0">
+        Select a provider above to analyze bandwidth and quarterly pricing.
+    </p>
+
+</div>
+
+{% endblock %}
